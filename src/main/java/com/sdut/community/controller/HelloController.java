@@ -14,6 +14,6 @@ public class HelloController {
     public String Hello(@RequestParam(name = "name") String name, Model model) {
         // 浏览器传的值放入model
         model.addAttribute("name", name);
-        return "hello";
+        return "index";
     }
 }
