@@ -9,11 +9,9 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author 24699
  */
 @Controller
-public class HelloController {
-    @GetMapping("/hello")
-    public String Hello(@RequestParam(name = "name") String name, Model model) {
-        // 浏览器传的值放入model
-        model.addAttribute("name", name);
+public class IndexController {
+    @GetMapping("/")  // 根目录
+    public String index() {
         return "index";
     }
 }
