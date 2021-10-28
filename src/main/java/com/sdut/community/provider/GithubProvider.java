@@ -25,10 +25,12 @@ public class GithubProvider {
                 .build();
         try (Response response = client.newCall(request).execute()) {
             String str = response.body().string();
-            System.out.println(str);
-            return str;
-        } catch (IOException e) {
-
+            // 截取token
+            // access_token=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&scope=user&token_type=bearer
+            String token = str.split("&")[0].split("=")[1];
+            return token;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return null;
     }
@@ -36,7 +38,8 @@ public class GithubProvider {
     public GithubUser getUser(String accessToken) {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url("https://api.github.com/user?access_token=" + accessToken)
+                .url("https://api.github.com/user?")
+                .header("Authorization","token "+accessToken)
                 .build();
         try {
             Response response = client.newCall(request).execute();
@@ -44,7 +47,7 @@ public class GithubProvider {
             GithubUser githubUser = JSON.parseObject(str, GithubUser.class);
             return githubUser;
         } catch (IOException e) {
-            return null;
         }
+        return null;
     }
 }

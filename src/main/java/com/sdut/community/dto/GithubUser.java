@@ -8,6 +8,15 @@ public class GithubUser {
     private Long id;
     private String bio;
 
+    @Override
+    public String toString() {
+        return "GithubUser{" +
+                "name='" + name + '\'' +
+                ", id=" + id +
+                ", bio='" + bio + '\'' +
+                '}';
+    }
+
     public String getName() {
         return name;
     }
