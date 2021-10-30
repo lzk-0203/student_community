@@ -11,7 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
 
 /**
@@ -31,10 +33,22 @@ public class AuthorizeController {
     @Autowired
     private UserMapper userMapper;
 
+    /**
+     * 1.填入Client的个人信息
+     * 2.获取accessToken
+     * 3.获取User信息
+     * 4.若获取信息不为空，写入数据库和 Cookie
+     * @param code
+     * @param state
+     * @param request
+     * @param response
+     * @return
+     */
     @GetMapping("/callback")
     public String callback(@RequestParam(name="code") String code,
                            @RequestParam(name="state") String state,
-                           HttpServletRequest request) {
+                           HttpServletRequest request,
+                           HttpServletResponse response) {
         AccessTokenDTO accessTokenDTO = new AccessTokenDTO();
         accessTokenDTO.setClient_id(clientID);
         accessTokenDTO.setClient_secret(clientSecret);
@@ -48,14 +62,15 @@ public class AuthorizeController {
         if (githubuser != null && githubuser.getId() != null) {
             // 写入数据库
             User user = new User();
-            user.setToken(UUID.randomUUID().toString());
+            String token = UUID.randomUUID().toString();
+            user.setToken(token);
             user.setName(githubuser.getName());
             user.setAccount_id(String.valueOf(githubuser.getId()));
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(user.getGmtCreate());
             userMapper.insert(user);
-            // 登录成功，写cookie和session
-            request.getSession().setAttribute("user", user);
+            // 写入cookie
+            response.addCookie(new Cookie("token", token));
         } else {
             // 登录失败，重新登录
         }

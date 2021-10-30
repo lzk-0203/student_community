@@ -3,6 +3,8 @@ package com.sdut.community.mapper;
 import com.sdut.community.model.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 /**
  * @author 24699
@@ -10,11 +12,20 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface UserMapper {
     /**
-     * 插入User，返回-1 或 0
+     * 利用注解整合mybatis，插入User
      * @param user
-     * @return
+     * @return -1 or 0
      */
     @Insert("insert into user (name, account_id, token, gmt_create, gmt_modified) " +
             "values (#{name}, #{account_id}, #{token}, #{gmtCreate}, #{gmtModified})")
     int insert(User user);
+
+    /**
+     * 根据自己生成的token查找user
+     * @param token
+     * 利用UUID生成的本地 token
+     * @return User
+     */
+    @Select("select * from user where token=#{token}")
+    User findByToken(@Param("token") String token);
 }
