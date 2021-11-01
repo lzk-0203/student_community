@@ -5,6 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/stu_community.css">
     <script src="js/bootstrap.min.js" type="application/javascript"></script>
 </head>
 <body>
@@ -14,7 +15,7 @@
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                     <span class="sr-only">学生交流平台</span>
                 </button>
-                <a class="navbar-brand" href="#">Brand</a>
+                <a class="navbar-brand" href="#">学生交流平台</a>
             </div>
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -40,40 +41,41 @@
                 </ul>
             </div>
         </div>
-        <!-- 栅格系统 -->
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-                    <h2><span class="glyphicon glyphicon-pencil" aria-hidden="true">发表</span></h2>
-                    <hr/>
+    </nav>
+    <!-- 栅格系统 -->
+    <div class="container-fluid main">
+        <div class="row">
+            <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                <h2><span class="glyphicon glyphicon-pencil" aria-hidden="true">&nbsp;发表</span></h2>
+                <hr/>
 
-                    <form>
-                        <div class="form-group">
-                            <label for="pro_title">问题标题(简单点~):</label>
-                            <input type="text" class="form-control" name="pro_title" id="pro_title" placeholder="问题标题">
-                        </div>
-                        <div class="form-group">
-                            <label for="pro_title">问题补充 (必填*， 请参照右侧提示):</label>
-                            <textarea class="form-control" name="description" id="description" cols="30" rows="10"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="pro_title">添加标签( ，分隔):</label>
-                            <input type="text" class="form-control" id="tag" name="tag" placeholder="请输入标签，以'，'分隔">
-                        </div>
+                <form action="/publish" method="post">
+                    <div class="form-group">
+                        <label for="pro_title">问题标题(简单点~):</label>
+                        <input type="text" class="form-control" name="pro_title" id="pro_title" placeholder="问题标题">
+                    </div>
+                    <div class="form-group">
+                        <label for="pro_title">问题补充 (必填*， 请参照右侧提示):</label>
+                        <textarea class="form-control" name="description" id="description" cols="30" rows="10"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="pro_title">添加标签( ，分隔):</label>
+                        <input type="text" class="form-control" id="tags" name="tags" placeholder="请输入标签，以'，'分隔">
+                    </div>
 
-                        <!-- Indicates a successful or positive action -->
-                        <button type="submit" class="btn btn-success">发表</button>
-                    </form>
-                </div>
+                    <span class="alert alert-danger" th:text="${error}"></span>
+                    <!-- 提交按钮 -->
+                    <button type="submit" class="btn btn-success btn-publish">发表</button>
+                </form>
+            </div>
 
-                <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-                    <h3>问题发表指南</h3>
-                    问题标题:请用精简的语言描述您发布的问题，不超过25字<br/>
-                    问题补充:详细补充您的问题内容，并确保问题描述清晰直观，并提供些相关的资料:<br/>
-                    选择标签:选择一个或者多个合适的标签，用逗号隔开，每个标签不超过10个字<br/>
-                </div>
+            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                <h3>问题发表指南</h3>
+                · 问题标题:请用精简的语言描述您发布的问题，不超过25字<br/>
+                · 问题补充:详细补充您的问题内容，并确保问题描述清晰直观，并提供些相关的资料:<br/>
+                · 选择标签:选择一个或者多个合适的标签，用逗号隔开，每个标签不超过10个字<br/>
             </div>
         </div>
-    </nav>
+    </div>
 </body>
 </html>
