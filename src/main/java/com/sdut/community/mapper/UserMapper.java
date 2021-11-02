@@ -16,8 +16,8 @@ public interface UserMapper {
      * @param user
      * @return -1 or 0
      */
-    @Insert("insert into user (name, account_id, token, gmt_create, gmt_modified) " +
-            "values (#{name}, #{account_id}, #{token}, #{gmtCreate}, #{gmtModified})")
+    @Insert("insert into user (name,account_id,token,gmt_create,gmt_modified,avatar_url) " +
+            "values (#{name}, #{account_id}, #{token}, #{gmtCreate}, #{gmtModified}, #{avatarUrl})")
     int insert(User user);
 
     /**

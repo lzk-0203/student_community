@@ -15,6 +15,6 @@ public interface QuestionMapper {
      * @return
      */
     @Insert("insert into question (title,description,gmt_create,gmt_modified,creator,tags) " +
-            "values (#{title},#{description},#{gmtCreate},#{gmtModified},#{creator},#{tags}")
+            "values (#{title},#{description},#{gmtCreate},#{gmtModified},#{creator},#{tags})")
     int create(Question question);
 }
