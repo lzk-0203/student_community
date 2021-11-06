@@ -21,11 +21,19 @@ public interface UserMapper {
     int insert(User user);
 
     /**
-     * 根据自己生成的token查找user
+     * 根据本地token查user
      * @param token
      * 利用UUID生成的本地 token
      * @return User
      */
     @Select("select * from user where token=#{token}")
     User findByToken(@Param("token") String token);
+
+    /**
+     * 根据Id查user
+     * @param id
+     * @return
+     */
+    @Select("select * from user where id=#{id}")
+    User findById(@Param("id") Integer id);
 }

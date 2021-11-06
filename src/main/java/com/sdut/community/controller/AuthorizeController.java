@@ -68,10 +68,12 @@ public class AuthorizeController {
             user.setAccount_id(String.valueOf(githubuser.getId()));
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(user.getGmtCreate());
-            user.setAvatarUrl(user.getAvatarUrl());
+            user.setAvatarUrl(githubuser.getAvatarUrl());
             userMapper.insert(user);
             // 写入cookie
-            response.addCookie(new Cookie("token", token));
+            Cookie cookie = new Cookie("token", token);
+            cookie.setMaxAge(60*60*24*30);
+            response.addCookie(cookie);
         } else {
             // 登录失败，重新登录
         }
