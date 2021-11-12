@@ -1,5 +1,7 @@
 package com.sdut.community.service;
 
+import com.github.pagehelper.PageHelper;
+import com.sdut.community.dto.PaginationDTO;
 import com.sdut.community.dto.QuestionDTO;
 import com.sdut.community.mapper.QuestionMapper;
 import com.sdut.community.mapper.UserMapper;
@@ -24,9 +26,24 @@ public class QuestionService {
     @Autowired
     private UserMapper userMapper;
 
-    public List<QuestionDTO> list() {
+    public PaginationDTO list(Integer page, Integer size) {
+
+        PaginationDTO paginationDTO = new PaginationDTO();
+        Integer totalCount = questionMapper.count();
+        paginationDTO.setPagination(totalCount, page, size);
+
+        if (page < 1) {
+            page = 1;
+        }
+        if (page > paginationDTO.getTotalPage()) {
+            page = paginationDTO.getTotalPage();
+        }
+
+        // pageHelper
+        PageHelper.startPage(page, size);
         List<Question> questions = questionMapper.list();
         List<QuestionDTO> questionDTOS = new ArrayList<>();
+
         for (Question question : questions) {
             User user = userMapper.findById(question.getCreator());
             QuestionDTO questionDTO = new QuestionDTO();
@@ -35,6 +52,8 @@ public class QuestionService {
             questionDTO.setUser(user);
             questionDTOS.add(questionDTO);
         }
-        return questionDTOS;
+        paginationDTO.setQuestionDTOs(questionDTOS);
+
+        return paginationDTO;
     }
 }

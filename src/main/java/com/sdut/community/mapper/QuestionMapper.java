@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 /**
@@ -27,4 +28,11 @@ public interface QuestionMapper {
      */
     @Select("select * from question")
     List<Question> list();
+
+    /**
+     * 计数
+     * @return
+     */
+    @Select("select count(1) from question")
+    Integer count();
 }

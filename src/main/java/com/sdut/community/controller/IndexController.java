@@ -1,19 +1,17 @@
 package com.sdut.community.controller;
 
-import com.sdut.community.dto.QuestionDTO;
-import com.sdut.community.mapper.QuestionMapper;
+import com.sdut.community.dto.PaginationDTO;
 import com.sdut.community.mapper.UserMapper;
-import com.sdut.community.model.Question;
 import com.sdut.community.model.User;
 import com.sdut.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
  * @author 24699
@@ -37,7 +35,9 @@ public class IndexController {
      */
     @GetMapping("/")  // 根目录
     public String toIndex(HttpServletRequest request,
-                          Model model) {
+                          Model model,
+                          @RequestParam(name="page", defaultValue = "1")Integer page,
+                          @RequestParam(name="size", defaultValue = "5")Integer size) {
         Cookie[] cookies = request.getCookies();
         if (cookies != null && cookies.length != 0) {
             for (Cookie cookie : cookies) {
@@ -52,8 +52,8 @@ public class IndexController {
             }
         }
         // 带有创建者user信息的传输类
-        List<QuestionDTO> questionList = questionService.list();
-        model.addAttribute("questions", questionList);
+        PaginationDTO pagination = questionService.list(page, size);
+        model.addAttribute("pagination", pagination);
         return "index";
     }
 }
