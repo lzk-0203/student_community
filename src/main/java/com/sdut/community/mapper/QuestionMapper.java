@@ -1,11 +1,12 @@
 package com.sdut.community.mapper;
 
 import com.sdut.community.model.Question;
+import com.sdut.community.model.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 /**
@@ -35,4 +36,20 @@ public interface QuestionMapper {
      */
     @Select("select count(1) from question")
     Integer count();
+
+    /**
+     * 获取我的问题
+     * @param userId
+     * @return
+     */
+    @Select("select * from question where creator = #{userId}")
+    List<Question> getQuestionsByUserId(@Param("userId") Integer userId);
+
+    /**
+     * 问题分页展示
+     * @param userId
+     * @return
+     */
+    @Select("select count(1) from question where creator = #{userId}")
+    Integer countByUserId(@Param("userId") Integer userId);
 }

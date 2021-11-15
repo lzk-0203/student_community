@@ -60,7 +60,7 @@ public class PublishController {
         question.setDescription(description);
         question.setTags(tags);
 
-        // 源代码利用Cookie获取
+        // 码匠利用Cookie获取
         User user = (User) request.getSession().getAttribute("user");
         if (user == null) {
             model.addAttribute("error", "用户未登录");
