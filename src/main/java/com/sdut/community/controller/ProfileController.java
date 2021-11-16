@@ -1,7 +1,6 @@
 package com.sdut.community.controller;
 
 import com.sdut.community.dto.PaginationDTO;
-import com.sdut.community.mapper.UserMapper;
 import com.sdut.community.model.User;
 import com.sdut.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +26,7 @@ public class ProfileController {
                           Model model, HttpServletRequest request,
                           @RequestParam(name="page", defaultValue = "1")Integer page,
                           @RequestParam(name="size", defaultValue = "5")Integer size) {
+
         User user = (User) request.getSession().getAttribute("user");
         if (user == null) {
             return "redirect:/";

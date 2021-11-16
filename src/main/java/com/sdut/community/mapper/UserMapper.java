@@ -1,10 +1,7 @@
 package com.sdut.community.mapper;
 
 import com.sdut.community.model.User;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 /**
  * @author 24699
@@ -17,7 +14,7 @@ public interface UserMapper {
      * @return -1 or 0
      */
     @Insert("insert into user (name,account_id,token,gmt_create,gmt_modified,avatar_url) " +
-            "values (#{name}, #{account_id}, #{token}, #{gmtCreate}, #{gmtModified}, #{avatarUrl})")
+            "values (#{name}, #{accountId}, #{token}, #{gmtCreate}, #{gmtModified}, #{avatarUrl})")
     int insert(User user);
 
     /**
@@ -35,5 +32,21 @@ public interface UserMapper {
      * @return
      */
     @Select("select * from user where id=#{id}")
-    User findById(@Param("id") Integer id);
+    User findById(@Param("id") Long id);
+
+    /**
+     * 避免用户二次添加
+     * @param accountId
+     * @return
+     */
+    @Select("select * from user where account_id=#{account_id}")
+    User findByAccountId(@Param("account_id") String accountId);
+
+    /**
+     * 跟新用户
+     * @param dbUser
+     */
+    @Update("update user set name=#{name}, token=#{token}, gmt_modified=#{gmtModified}， avatar_url=#{avatarUrl} " +
+            "where id = #{id}")
+    void update(User dbUser);
 }

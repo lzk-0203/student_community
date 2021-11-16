@@ -1,5 +1,6 @@
 package com.sdut.community.mapper;
 
+import com.sdut.community.dto.QuestionDTO;
 import com.sdut.community.model.Question;
 import com.sdut.community.model.User;
 import org.apache.ibatis.annotations.Insert;
@@ -52,4 +53,12 @@ public interface QuestionMapper {
      */
     @Select("select count(1) from question where creator = #{userId}")
     Integer countByUserId(@Param("userId") Integer userId);
+
+    /**
+     * 问题显示
+     * @param id
+     * @return
+     */
+    @Select("select * from question where id = #{id}")
+    Question getQuestionById(@Param("id") Integer id);
 }

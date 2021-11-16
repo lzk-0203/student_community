@@ -1,6 +1,5 @@
 package com.sdut.community.dto;
 
-import com.sdut.community.model.Question;
 import lombok.Data;
 
 import java.util.ArrayList;
