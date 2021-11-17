@@ -3,10 +3,7 @@ package com.sdut.community.mapper;
 import com.sdut.community.dto.QuestionDTO;
 import com.sdut.community.model.Question;
 import com.sdut.community.model.User;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -61,4 +58,12 @@ public interface QuestionMapper {
      */
     @Select("select * from question where id = #{id}")
     Question getQuestionById(@Param("id") Integer id);
+
+    /**
+     * 修改问题
+     * @param question
+     */
+    @Update("update question set title=#{title}, description=#{description}, gmt_modified=#{gmtModified}, tags=#{tags} " +
+            "where id=#{id}")
+    void update(Question question);
 }

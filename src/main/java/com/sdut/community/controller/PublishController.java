@@ -1,12 +1,14 @@
 package com.sdut.community.controller;
 
-import com.sdut.community.mapper.QuestionMapper;
+import com.sdut.community.dto.QuestionDTO;
 import com.sdut.community.model.Question;
 import com.sdut.community.model.User;
+import com.sdut.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -19,7 +21,18 @@ import javax.servlet.http.HttpServletRequest;
 public class PublishController {
 
     @Autowired
-    private QuestionMapper questionMapper;
+    private QuestionService questionService;
+
+    @GetMapping("/publish/{id}")
+    public String edit(@PathVariable(name = "id")Integer id,
+                       Model model) {
+        QuestionDTO question = questionService.getById(id);
+        model.addAttribute("pro_title",question.getTitle());
+        model.addAttribute("description",question.getDescription());
+        model.addAttribute("tags",question.getTags());
+        model.addAttribute("id", question.getId());
+        return "publish";
+    }
 
     @GetMapping("/publish")
     public String publish() {
@@ -28,9 +41,10 @@ public class PublishController {
 
     @PostMapping("/publish")
     public String doPublish(
-            @RequestParam("pro_title") String pro_title,
-            @RequestParam("description") String description,
-            @RequestParam("tags") String tags,
+            @RequestParam(value = "pro_title", required = false) String pro_title,
+            @RequestParam(value = "description", required = false) String description,
+            @RequestParam(value = "tags", required = false) String tags,
+            @RequestParam(value = "id", required = false) Integer id,
             HttpServletRequest request,
             Model model) {
         model.addAttribute("pro_title",pro_title);
@@ -61,9 +75,8 @@ public class PublishController {
             return "publish";
         }
         question.setCreator(Long.valueOf(user.getId()));
-        question.setGmtCreate(System.currentTimeMillis());
-        question.setGmtModified(question.getGmtCreate());
-        questionMapper.create(question);
+        question.setId(id);
+        questionService.createOrUpdate(question);
         return "redirect:/";
     }
 }

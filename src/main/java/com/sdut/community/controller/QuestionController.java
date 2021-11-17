@@ -1,7 +1,6 @@
 package com.sdut.community.controller;
 
 import com.sdut.community.dto.QuestionDTO;
-import com.sdut.community.mapper.QuestionMapper;
 import com.sdut.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

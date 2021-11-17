@@ -46,7 +46,7 @@ public interface UserMapper {
      * 跟新用户
      * @param dbUser
      */
-    @Update("update user set name=#{name}, token=#{token}, gmt_modified=#{gmtModified}， avatar_url=#{avatarUrl} " +
+    @Update("update user set name=#{name}, token=#{token}, gmt_modified=#{gmtModified}, avatar_url=#{avatarUrl} " +
             "where id = #{id}")
     void update(User dbUser);
 }
