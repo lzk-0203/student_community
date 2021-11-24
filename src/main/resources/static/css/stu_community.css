@@ -1,6 +1,7 @@
 @charset "UTF-8s";
 body {
     background-color: #efefef;
+    padding-top: 50px;
 }
 .main {
     background-color: white;
@@ -18,4 +19,11 @@ body {
     font-size: 12px;
     font-weight: normal;
     color: #999;
+}
+.profile .section {
+    margin-top: 15px;
+}
+.community-menu {
+    color: #999;
+    font-size: 14px;
 }

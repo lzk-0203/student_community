@@ -1,11 +1,10 @@
 package com.sdut.community.mapper;
 
+import com.sdut.community.dto.QuestionDTO;
 import com.sdut.community.model.Question;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import com.sdut.community.model.User;
+import org.apache.ibatis.annotations.*;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 /**
@@ -35,4 +34,36 @@ public interface QuestionMapper {
      */
     @Select("select count(1) from question")
     Integer count();
+
+    /**
+     * 获取我的问题
+     * @param userId
+     * @return
+     */
+    @Select("select * from question where creator = #{userId}")
+    List<Question> getQuestionsByUserId(@Param("userId") Integer userId);
+
+    /**
+     * 问题分页展示
+     * @param userId
+     * @return
+     */
+    @Select("select count(1) from question where creator = #{userId}")
+    Integer countByUserId(@Param("userId") Integer userId);
+
+    /**
+     * 问题显示
+     * @param id
+     * @return
+     */
+    @Select("select * from question where id = #{id}")
+    Question getQuestionById(@Param("id") Integer id);
+
+    /**
+     * 修改问题
+     * @param question
+     */
+    @Update("update question set title=#{title}, description=#{description}, gmt_modified=#{gmtModified}, tags=#{tags} " +
+            "where id=#{id}")
+    void update(Question question);
 }

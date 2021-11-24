@@ -42,10 +42,10 @@ public class QuestionService {
         // pageHelper
         PageHelper.startPage(page, size);
         List<Question> questions = questionMapper.list();
-        List<QuestionDTO> questionDTOS = new ArrayList<>();
 
+        List<QuestionDTO> questionDTOS = new ArrayList<>();
         for (Question question : questions) {
-            User user = userMapper.findById(question.getCreator());
+            User user = userMapper.selectByPrimaryKey(question.getCreator());
             QuestionDTO questionDTO = new QuestionDTO();
             // 快速通过名字反射进行拷贝
             BeanUtils.copyProperties(question, questionDTO);
@@ -53,7 +53,55 @@ public class QuestionService {
             questionDTOS.add(questionDTO);
         }
         paginationDTO.setQuestionDTOs(questionDTOS);
-
         return paginationDTO;
+    }
+
+    public PaginationDTO getQuestionsByUserId(Integer userId ,Integer page, Integer size) {
+        PaginationDTO paginationDTO = new PaginationDTO();
+        Integer totalCount = questionMapper.countByUserId(userId);
+        paginationDTO.setPagination(totalCount, page, size);
+
+        if (page < 1) {
+            page = 1;
+        }
+        if (page > paginationDTO.getTotalPage()) {
+            page = paginationDTO.getTotalPage();
+        }
+
+        // pageHelper
+        PageHelper.startPage(page, size);
+        List<Question> questions = questionMapper.list();
+
+        List<QuestionDTO> questionDTOS = new ArrayList<>();
+        for (Question question : questions) {
+            User user = userMapper.selectByPrimaryKey(question.getCreator());
+            QuestionDTO questionDTO = new QuestionDTO();
+            // 快速通过名字反射进行拷贝
+            BeanUtils.copyProperties(question, questionDTO);
+            questionDTO.setUser(user);
+            questionDTOS.add(questionDTO);
+        }
+        paginationDTO.setQuestionDTOs(questionDTOS);
+        return paginationDTO;
+    }
+
+    public QuestionDTO getById(Integer id) {
+        Question question = questionMapper.getQuestionById(id);
+        User user = userMapper.selectByPrimaryKey(question.getCreator());
+        QuestionDTO questionDTO = new QuestionDTO();
+        BeanUtils.copyProperties(question, questionDTO);
+        questionDTO.setUser(user);
+        return questionDTO;
+    }
+
+    public void createOrUpdate(Question question) {
+        if (question.getId() == null) {
+            question.setGmtCreate(System.currentTimeMillis());
+            question.setGmtModified(question.getGmtCreate());
+            questionMapper.create(question);
+        } else {
+            question.setGmtModified(System.currentTimeMillis());
+            questionMapper.update(question);
+        }
     }
 }
