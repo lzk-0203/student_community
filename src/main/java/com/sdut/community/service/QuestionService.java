@@ -3,6 +3,8 @@ package com.sdut.community.service;
 import com.github.pagehelper.PageHelper;
 import com.sdut.community.dto.PaginationDTO;
 import com.sdut.community.dto.QuestionDTO;
+import com.sdut.community.exception.CustomizeErrorCode;
+import com.sdut.community.exception.CustomizeException;
 import com.sdut.community.mapper.QuestionMapper;
 import com.sdut.community.mapper.UserMapper;
 import com.sdut.community.model.Question;
@@ -87,6 +89,9 @@ public class QuestionService {
 
     public QuestionDTO getById(Integer id) {
         Question question = questionMapper.getQuestionById(id);
+        if (question == null) {
+            throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+        }
         User user = userMapper.selectByPrimaryKey(question.getCreator());
         QuestionDTO questionDTO = new QuestionDTO();
         BeanUtils.copyProperties(question, questionDTO);
@@ -101,7 +106,10 @@ public class QuestionService {
             questionMapper.create(question);
         } else {
             question.setGmtModified(System.currentTimeMillis());
-            questionMapper.update(question);
+            int result = questionMapper.update(question);
+            if (result != 1) {
+                throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+            }
         }
     }
 }

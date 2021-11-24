@@ -62,8 +62,9 @@ public interface QuestionMapper {
     /**
      * 修改问题
      * @param question
+     * @return
      */
     @Update("update question set title=#{title}, description=#{description}, gmt_modified=#{gmtModified}, tags=#{tags} " +
             "where id=#{id}")
-    void update(Question question);
+    int update(Question question);
 }
