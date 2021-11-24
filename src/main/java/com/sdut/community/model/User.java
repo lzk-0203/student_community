@@ -30,7 +30,6 @@ public class User {
      * @mbg.generated Mon Nov 22 21:01:02 CST 2021
      */
     private String name;
-<<<<<<< HEAD
 
     /**
      *
@@ -39,9 +38,6 @@ public class User {
      *
      * @mbg.generated Mon Nov 22 21:01:02 CST 2021
      */
-=======
-    private String accountId;
->>>>>>> bafc6151b975265c04572e50e92c2faf8724cdd0
     private String token;
 
     /**
