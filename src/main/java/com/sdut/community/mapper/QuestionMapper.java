@@ -1,8 +1,6 @@
 package com.sdut.community.mapper;
 
-import com.sdut.community.dto.QuestionDTO;
 import com.sdut.community.model.Question;
-import com.sdut.community.model.User;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -25,7 +23,7 @@ public interface QuestionMapper {
      * 搜索问题列表
      * @return
      */
-    @Select("select * from question")
+    @Select("select * from question order by id desc")
     List<Question> list();
 
     /**
@@ -64,7 +62,15 @@ public interface QuestionMapper {
      * @param question
      * @return
      */
-    @Update("update question set title=#{title}, description=#{description}, gmt_modified=#{gmtModified}, tags=#{tags} " +
-            "where id=#{id}")
+    @Update("update question set title=#{title}, description=#{description}, gmt_modified=#{gmtModified}, tags=#{tags}, " +
+            "view_count=#{viewCount} where id=#{id}")
     int update(Question question);
+
+    /**
+     * 用于数据库自增添加浏览数
+     * @param question
+     */
+    @Update("update question set view_count=view_count + 1 where id=#{id}")
+    void updateByView(Question question);
+
 }

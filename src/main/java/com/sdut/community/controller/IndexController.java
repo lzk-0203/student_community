@@ -37,7 +37,7 @@ public class IndexController {
     public String toIndex(HttpServletRequest request,
                           Model model,
                           @RequestParam(name="page", defaultValue = "1")Integer page,
-                          @RequestParam(name="size", defaultValue = "8")Integer size) {
+                          @RequestParam(name="size", defaultValue = "5")Integer size) {
         // 带有创建者user信息的传输类
         PaginationDTO pagination = questionService.list(page, size);
         model.addAttribute("pagination", pagination);
