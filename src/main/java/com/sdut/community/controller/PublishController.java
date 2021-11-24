@@ -74,7 +74,11 @@ public class PublishController {
             model.addAttribute("error", "用户未登录");
             return "publish";
         }
+<<<<<<< HEAD
         question.setCreator(user.getId());
+=======
+        question.setCreator(Long.valueOf(user.getId()));
+>>>>>>> bafc6151b975265c04572e50e92c2faf8724cdd0
         question.setId(id);
         questionService.createOrUpdate(question);
         return "redirect:/";
