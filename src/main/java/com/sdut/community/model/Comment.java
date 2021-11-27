@@ -6,15 +6,13 @@ import lombok.Data;
  * @author 24699
  */
 @Data
-public class Question {
+public class Comment {
     private Long id;
-    private String title;
-    private String description;
-    private String tags;
+    private Long parentId;
+    private Integer type;
+    private Long commentator;
     private Long gmtCreate;
     private Long gmtModified;
-    private Long creator;
-    private Integer viewCount;
-    private Integer commentCount;
     private Integer likeCount;
+    private String content;
 }

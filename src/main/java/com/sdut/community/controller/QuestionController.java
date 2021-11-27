@@ -18,12 +18,13 @@ public class QuestionController {
     private QuestionService questionService;
 
     @GetMapping("/question/{id}")
-    private String question(@PathVariable(name = "id") Integer id,
+    private String question(@PathVariable(name = "id") Long id,
                             Model model) {
         QuestionDTO questionDTO = questionService.getById(id);
         // 累加阅读数
-        questionService.incView(id);
         model.addAttribute("question", questionDTO);
+        questionService.incView(id);
+        questionService.intCommentCount(id);
         return "question";
     }
 }

@@ -39,7 +39,7 @@ public interface QuestionMapper {
      * @return
      */
     @Select("select * from question where creator = #{userId}")
-    List<Question> getQuestionsByUserId(@Param("userId") Integer userId);
+    List<Question> getQuestionsByUserId(@Param("userId") Long userId);
 
     /**
      * 问题分页展示
@@ -47,7 +47,7 @@ public interface QuestionMapper {
      * @return
      */
     @Select("select count(1) from question where creator = #{userId}")
-    Integer countByUserId(@Param("userId") Integer userId);
+    Integer countByUserId(@Param("userId") Long userId);
 
     /**
      * 问题显示
@@ -55,7 +55,7 @@ public interface QuestionMapper {
      * @return
      */
     @Select("select * from question where id = #{id}")
-    Question getQuestionById(@Param("id") Integer id);
+    Question getQuestionById(@Param("id") Long id);
 
     /**
      * 修改问题
@@ -73,4 +73,10 @@ public interface QuestionMapper {
     @Update("update question set view_count=view_count + 1 where id=#{id}")
     void updateByView(Question question);
 
+    /**
+     * 添加问题评论数
+     * @param question
+     */
+    @Update("update question set comment_count=1 + #{commentCount} where id=#{id}")
+    void updateByComment(Question question);
 }

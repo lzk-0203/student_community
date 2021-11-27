@@ -11,7 +11,7 @@ public class User {
      *
      * @mbg.generated Mon Nov 22 21:01:02 CST 2021
      */
-    private Integer id;
+    private Long id;
 
     /**
      *
@@ -75,7 +75,7 @@ public class User {
      *
      * @mbg.generated Mon Nov 22 21:01:02 CST 2021
      */
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
@@ -87,7 +87,7 @@ public class User {
      *
      * @mbg.generated Mon Nov 22 21:01:02 CST 2021
      */
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

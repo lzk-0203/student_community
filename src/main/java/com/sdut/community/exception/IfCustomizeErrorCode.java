@@ -9,4 +9,10 @@ public interface IfCustomizeErrorCode {
      * @return
      */
     String getMessage();
+
+    /**
+     * error代码
+     * @return
+     */
+    Integer getCode();
 }

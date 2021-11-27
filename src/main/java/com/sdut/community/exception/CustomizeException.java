@@ -1,19 +1,24 @@
 package com.sdut.community.exception;
 
-import org.jetbrains.annotations.NotNull;
-
 /**
  * @author 24699
  */
-public class CustomizeException extends RuntimeException{
-    private String message;
 
-    public CustomizeException(@NotNull IfCustomizeErrorCode errorCode) {
+public class CustomizeException extends RuntimeException{
+    private String message = "好像出错了";
+    private Integer code;
+
+    public CustomizeException(IfCustomizeErrorCode errorCode) {
         this.message = errorCode.getMessage();
+        this.code = errorCode.getCode();
     }
 
     @Override
     public String getMessage() {
         return message;
+    }
+
+    public Integer getCode() {
+        return code;
     }
 }
