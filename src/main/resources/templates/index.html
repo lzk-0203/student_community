@@ -2,13 +2,22 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>学生交流平台</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="css/stu_community.css">
     <script src="js/jquery-3.6.0.min.js"></script>
     <script src="js/bootstrap.min.js" type="application/javascript"></script>
 </head>
+<script type="application/javascript">
+    window.onload = function () {
+        let closable = window.localStorage.getItem("closable");
+        if (closable == "true") {
+            window.close();
+            window.localStorage.removeItem("closable");
+        }
+    }
+</script>
 <body>
 <div th:insert="~{navigation.html::nav}"></div>
 <!-- 栅格系统 -->
@@ -21,7 +30,7 @@
             <div class="media" th:each="question:${pagination.questionDTOs}">
                 <div class="media-left">
                     <a href="#">
-                        <img class="media-object img-circle" th:src="${question.user.avatarUrl}">
+                        <img class="media-object img-rounded" th:src="${question.user.avatarUrl}">
                     </a>
                 </div>
                 <div class="media-body">
@@ -50,7 +59,7 @@
                         </a>
                     </li>
 
-                    <li th:each="page:${pagination.pages} "th:class="${pagination.page == page}? 'active':''">
+                    <li th:each="page:${pagination.pages} " th:class="${pagination.page == page}? 'active':''">
                         <a th:href="@{/(page=${page})}" th:text="${page}"></a>
                     </li>
                     <li th:if="${pagination.showNext}">

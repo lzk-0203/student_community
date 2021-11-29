@@ -3,7 +3,6 @@ package com.sdut.community.controller;
 import com.sdut.community.dto.CommentDTO;
 import com.sdut.community.dto.ResultDTO;
 import com.sdut.community.exception.CustomizeErrorCode;
-import com.sdut.community.mapper.CommentMapper;
 import com.sdut.community.model.Comment;
 import com.sdut.community.model.User;
 import com.sdut.community.service.CommentService;
@@ -39,7 +38,7 @@ public class CommentController {
         comment.setType(commentDTO.getType());
         comment.setGmtCreate(System.currentTimeMillis());
         comment.setGmtModified(System.currentTimeMillis());
-        comment.setCommentator(commentDTO.getCommentator());
+        comment.setCommentator(user.getId());
         comment.setLikeCount(0);
         commentService.insert(comment);
         return ResultDTO.okOf();

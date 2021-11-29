@@ -24,7 +24,6 @@ public class QuestionController {
         // 累加阅读数
         model.addAttribute("question", questionDTO);
         questionService.incView(id);
-        questionService.intCommentCount(id);
         return "question";
     }
 }

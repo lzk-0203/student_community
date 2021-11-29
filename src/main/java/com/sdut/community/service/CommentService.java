@@ -9,6 +9,8 @@ import com.sdut.community.model.Comment;
 import com.sdut.community.model.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 
 /**
  * @author 24699
@@ -22,12 +24,13 @@ public class CommentService {
     @Autowired
     private QuestionMapper questionMapper;
 
+    @Transactional(rollbackFor = RuntimeException.class)
     public void insert(Comment comment) {
         if (comment.getParentId() == null || comment.getParentId() == 0) {
             throw new CustomizeException(CustomizeErrorCode.TARGET_PARAM_NOT_FOUND);
         }
         if (comment.getType() == null || !CommentTypeEnum.isExit(comment.getType())) {
-            throw new CustomizeException(CustomizeErrorCode.TARGET_PARAM_NOT_FOUND);
+            throw new CustomizeException(CustomizeErrorCode.TYPE_PARAM_WRONG);
         }
         if (comment.getType().equals(CommentTypeEnum.COMMENT.getType())) {
             // 回复评论
