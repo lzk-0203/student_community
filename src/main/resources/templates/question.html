@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title th:text="${question.title}"></title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="/css/stu_community.css">
@@ -15,18 +15,20 @@
 <!-- 栅格系统 -->
 <div class="container-fluid main profile">
     <div class="row">
+
+        <!--做边主要内容-->
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+            <!--正文-->
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <h4><span th:text="${question.title}"></span></h4>
+                <h4 class="question-title"><span th:text="${question.title}"></span></h4>
                 <span class="text-desc">
                 作者: <span th:text="${question.user.name}"></span>&nbsp;&nbsp;&nbsp;&nbsp;
                 标签：<span th:text="${question.tags}"></span>
                 <br>
-                共 <span th:text="${question.commentCount}"></span> 条回复 |
                 共 <span th:text="${question.viewCount}"></span> 次浏览 |
                 发布于 <span th:text="${#dates.format(question.gmtCreate, 'yyyy.MM.dd HH:mm')}"></span>
                 </span>
-                <hr/>
+                <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:text="${question.description}"></div>
                 <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12"/>
                 <a th:href="@{'/publish/'+${question.id}}" class="community-menu"
@@ -35,7 +37,40 @@
                     编辑
                 </a>
             </div>
-            <br class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <!--回复-->
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <h4>
+                    共<span th:text="${question.commentCount}"></span>个回复
+                </h4>
+                <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12 comment-sp">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 comments" th:each="comment : ${comments}">
+                    <div class="media">
+                        <div class="media-left">
+                            <a href="#">
+                                <img class="media-object img-rounded" th:src="${comment.user.avatarUrl}">
+                            </a>
+                        </div>
+                        <div class="media-body">
+                            <h5 class="media-heading">
+                                <span th:text="${comment.user.name}"></span>
+                            </h5>
+                            <div th:text="${comment.content}"></div>
+                            <div class="comment-menu">
+                                <span class="glyphicon  glyphicon-thumbs-up icon"></span>
+                                <span class="glyphicon glyphicon-comment icon"th:data-id="${comment.id}"
+                                      onclick="collapseComments()"></span>
+                                <span class="pull-right"
+                                      th:text="${#dates.format(comment.gmtCreate, 'yyyy.MM.dd')}"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--输入框-->
+            <h4>
+                回复问题
+            </h4>
+            <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12 comment-sp">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="comment_section">
                 <div class="media">
                     <div class="media-left">
@@ -53,8 +88,9 @@
                 <textarea class="form-control comment" rows="6" id="comment_content"></textarea>
                 <button type="button" class="btn btn-success btn-comment" onclick="post()">回复</button>
             </div>
-        </div>
 
+        </div>
+        <!--右侧信息提示栏-->
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <h4>发起人</h4>

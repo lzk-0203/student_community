@@ -79,4 +79,5 @@ public interface QuestionMapper {
      */
     @Update("update question set comment_count=1 + #{commentCount} where id=#{id}")
     void updateByComment(Question question);
+
 }

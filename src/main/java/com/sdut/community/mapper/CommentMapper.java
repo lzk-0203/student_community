@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 /**
  * @author 24699
  */
@@ -20,10 +22,19 @@ public interface CommentMapper {
     void insert(Comment comment);
 
     /**
-     * 查
+     * 查评论
      * @param id
      * @return
      */
     @Select("select * from comment where id=#{id}")
     Comment selectById(Long id);
+
+    /**
+     * 查找不同级别评论
+     * @param id
+     * @param type
+     * @return
+     */
+    @Select("select * from comment where parent_id=#{id} and type=#{type}")
+    List<Comment> questionsByIdAndType(Long id, Integer type);
 }

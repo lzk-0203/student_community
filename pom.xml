@@ -38,12 +38,13 @@
             <scope>test</scope>
         </dependency>
 
+        <!--向GitHub发送请求-->
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
             <version>4.9.0</version>
         </dependency>
-
+        <!--镜像-->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
@@ -74,17 +75,26 @@
             <version>1.18.22</version>
             <scope>provided</scope>
         </dependency>
-        <!--&lt;!&ndash; 热部署 &ndash;&gt;-->
+
+        <!--热部署-->
         <!--<dependency>-->
         <!--    <groupId>org.springframework.boot</groupId>-->
         <!--    <artifactId>spring-boot-devtools</artifactId>-->
         <!--    <optional>true</optional>-->
         <!--</dependency>-->
+
         <!-- 分页 -->
         <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper-spring-boot-starter</artifactId>
             <version>1.2.3</version>
+        </dependency>
+
+        <!--判断String是否为空工具-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.9</version>
         </dependency>
     </dependencies>
 
