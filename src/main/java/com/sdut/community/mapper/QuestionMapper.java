@@ -80,4 +80,25 @@ public interface QuestionMapper {
     @Update("update question set comment_count=1 + #{commentCount} where id=#{id}")
     void updateByComment(Question question);
 
+    /**
+     * 热门话题
+     * @return
+     */
+    @Select("select * from question order by view_count desc limit 6")
+    List<Question> getQuestionsByView();
+
+    /**
+     * 模糊查询相关标签
+     * @param tag
+     * @return
+     */
+    @Select("select * from question where tags like concat('%',#{tag},'%')")
+    List<Question> getRelevant(String tag);
+
+    /**
+     * 根据id删除，没做限制，不安全
+     * @param id
+     */
+    @Delete("delete from question where id = #{id}")
+    void deleteById(Long id);
 }

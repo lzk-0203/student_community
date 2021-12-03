@@ -1,7 +1,9 @@
 package com.sdut.community.controller;
 
 import com.sdut.community.dto.CommentCreateDTO;
+import com.sdut.community.dto.CommentDTO;
 import com.sdut.community.dto.ResultDTO;
+import com.sdut.community.enums.CommentTypeEnum;
 import com.sdut.community.exception.CustomizeErrorCode;
 import com.sdut.community.model.Comment;
 import com.sdut.community.model.User;
@@ -9,12 +11,11 @@ import com.sdut.community.service.CommentService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author 24699
@@ -50,4 +51,12 @@ public class CommentController {
         commentService.insert(comment);
         return ResultDTO.okOf();
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/comment/{id}", method = RequestMethod.GET)
+    public ResultDTO<List<CommentDTO>> comments(@PathVariable(name = "id") Long id) {
+        List<CommentDTO> commentDTOS = commentService.listByTargetId(id, CommentTypeEnum.COMMENT.getType());
+        return ResultDTO.okOf(commentDTOS);
+    }
 }
+

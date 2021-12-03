@@ -1,8 +1,9 @@
 package com.sdut.community.controller;
 
-import com.sdut.community.dto.CommentCreateDTO;
 import com.sdut.community.dto.CommentDTO;
 import com.sdut.community.dto.QuestionDTO;
+import com.sdut.community.enums.CommentTypeEnum;
+import com.sdut.community.model.Question;
 import com.sdut.community.service.CommentService;
 import com.sdut.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,14 +31,21 @@ public class QuestionController {
                             Model model) {
         QuestionDTO questionDTO = questionService.getById(id);
         // 获取评论列表
-        List<CommentDTO> comments = commentService.listByQuestionId(id);
-
-        // 累加阅读数
-        questionService.incView(id);
-
+        List<CommentDTO> comments = commentService.listByTargetId(id, CommentTypeEnum.QUESTION.getType());
         // 放入Model
         model.addAttribute("question", questionDTO);
+        // 累加阅读数
+        questionService.incView(id);
         model.addAttribute("comments", comments);
+        // 相关问题
+        List<Question> relevantQuestions = questionService.getRelevantQuestions(id);
+        model.addAttribute("relevantQuestions", relevantQuestions);
         return "question";
+    }
+
+    @GetMapping("/delete/{id}")
+    private String delete(@PathVariable(name = "id") Long id) {
+        questionService.deleteQuestionById(id);
+        return "redirect:/";
     }
 }

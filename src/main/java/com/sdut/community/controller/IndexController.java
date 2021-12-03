@@ -2,6 +2,7 @@ package com.sdut.community.controller;
 
 import com.sdut.community.dto.PaginationDTO;
 import com.sdut.community.mapper.UserMapper;
+import com.sdut.community.model.Question;
 import com.sdut.community.model.User;
 import com.sdut.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author 24699
@@ -37,10 +39,13 @@ public class IndexController {
     public String toIndex(HttpServletRequest request,
                           Model model,
                           @RequestParam(name="page", defaultValue = "1")Integer page,
-                          @RequestParam(name="size", defaultValue = "5")Integer size) {
+                          @RequestParam(name="size", defaultValue = "5")Integer size,
+                          @RequestParam(name="search", required = false)String search) {
         // 带有创建者user信息的传输类
-        PaginationDTO pagination = questionService.list(page, size);
+        PaginationDTO pagination = questionService.list(search, page, size);
+        List<Question> viewQuestion = questionService.listByViewCount();
         model.addAttribute("pagination", pagination);
+        model.addAttribute("viewQuestion", viewQuestion);
         return "index";
     }
 }

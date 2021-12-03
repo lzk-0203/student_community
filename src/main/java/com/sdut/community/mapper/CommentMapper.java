@@ -36,5 +36,5 @@ public interface CommentMapper {
      * @return
      */
     @Select("select * from comment where parent_id=#{id} and type=#{type}")
-    List<Comment> questionsByIdAndType(Long id, Integer type);
+    List<Comment> questionsByTargetId(Long id, Integer type);
 }

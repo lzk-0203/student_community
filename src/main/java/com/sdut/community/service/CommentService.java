@@ -47,7 +47,7 @@ public class CommentService {
         }
         if (comment.getType().equals(CommentTypeEnum.COMMENT.getType())) {
             // 回复评论
-            Comment dbComment = commentMapper.selectById(comment.getId());
+            Comment dbComment = commentMapper.selectById(comment.getParentId());
             if (dbComment == null) {
                 throw new CustomizeException(CustomizeErrorCode.COMMENT_NOT_FOUND);
             }
@@ -63,8 +63,8 @@ public class CommentService {
         }
     }
 
-    public List<CommentDTO> listByQuestionId(Long id) {
-        List<Comment> comments = commentMapper.questionsByIdAndType(id, CommentTypeEnum.QUESTION.getType());
+    public List<CommentDTO> listByTargetId(Long id, Integer type) {
+        List<Comment> comments = commentMapper.questionsByTargetId(id, type);
         if (comments.size() == 0) {
             return new ArrayList<>();
         }
@@ -77,7 +77,6 @@ public class CommentService {
         }
         // 将userList转换成Map, 降低时间复杂度
         Map<Long, User> userMap = users.stream().collect(Collectors.toMap(user -> user.getId(), user -> user));
-
         // 转换Comment为CommentDTO(set User)
         List<CommentDTO> commentDTOS = comments.stream().map(comment -> {
             CommentDTO commentDTO = new CommentDTO();

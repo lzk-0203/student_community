@@ -67,7 +67,7 @@ public class PublishController {
         Question question = new Question();
         question.setTitle(pro_title);
         question.setDescription(description);
-        question.setTags(tags);
+        question.setTags(tags.replace("，", "|"));
 
         User user = (User) request.getSession().getAttribute("user");
         if (user == null) {
