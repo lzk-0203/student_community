@@ -145,7 +145,6 @@ public class QuestionService {
         questionMapper.updateByView(question);
     }
 
-
     public List<Question> listByViewCount() {
         List<Question> questionsByView = questionMapper.getQuestionsByView();
         return questionsByView;
