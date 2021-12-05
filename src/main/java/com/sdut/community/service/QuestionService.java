@@ -30,6 +30,7 @@ public class QuestionService {
     private UserMapper userMapper;
 
     public PaginationDTO list(String search, Integer page, Integer size) {
+
         PaginationDTO paginationDTO = new PaginationDTO();
 
         if (StringUtils.isNotBlank(search)) {
@@ -131,6 +132,7 @@ public class QuestionService {
             NewQuestion.setDescription(question.getDescription());
             NewQuestion.setTags(question.getTags());
             NewQuestion.setGmtModified(System.currentTimeMillis());
+            NewQuestion.setFile(question.getFile());
             int result = questionMapper.update(NewQuestion);
             if (result != 1) {
                 throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
@@ -143,10 +145,6 @@ public class QuestionService {
         questionMapper.updateByView(question);
     }
 
-    public void intCommentCount(Long id) {
-        Question question = questionMapper.getQuestionById(id);
-        questionMapper.updateByComment(question);
-    }
 
     public List<Question> listByViewCount() {
         List<Question> questionsByView = questionMapper.getQuestionsByView();
@@ -167,5 +165,9 @@ public class QuestionService {
 
     public void deleteQuestionById(Long id) {
         questionMapper.deleteById(id);
+    }
+
+    public Question getQuestionById(Long id) {
+        return questionMapper.getQuestionById(id);
     }
 }

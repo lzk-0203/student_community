@@ -63,7 +63,7 @@ public interface QuestionMapper {
      * @return
      */
     @Update("update question set title=#{title}, description=#{description}, gmt_modified=#{gmtModified}, tags=#{tags}, " +
-            "view_count=#{viewCount} where id=#{id}")
+            "view_count=#{viewCount}, file=#{file} where id=#{id}")
     int update(Question question);
 
     /**

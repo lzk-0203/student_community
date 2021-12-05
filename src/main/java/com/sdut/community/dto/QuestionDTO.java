@@ -19,4 +19,5 @@ public class  QuestionDTO {
     private Integer viewCount;
     private Integer commentCount;
     private Integer likeCount;
+    private String File;
 }

@@ -43,6 +43,16 @@
                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                     删除
                 </a>
+                <form class="community-menu" method="post" th:if="${session.user != null && session.user.id == question.creator}"
+                      th:action="@{'/upload/'+${question.id}}" enctype="multipart/form-data">
+                    <span class="glyphicon glyphicon-upload" aria-hidden="true"></span>
+                    <input id="files" name="files" type="file" style="display: inline" />
+                    <button type="submit">提交</button>
+                </form>
+                <form th:action="@{'/download/'+${question.id}}" class="form-signin community-menu" method="post">
+                    <span class="glyphicon glyphicon-download" aria-hidden="true"></span>
+                    <input type="submit" value="下载"/>
+                </form>
             </div>
             <!--回复-->
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -63,7 +73,7 @@
                             </h5>
                             <div th:text="${comment.content}"></div>
                             <div class="comment-menu">
-                                <span class="glyphicon  glyphicon-thumbs-up icon"></span>
+<!--                                <span class="glyphicon  glyphicon-thumbs-up icon"></span>-->
                                 <span class="glyphicon glyphicon-comment icon" th:data-id="${comment.id}"
                                       onclick="collapseComments(this)"></span>
                                 <span class="pull-right"
@@ -91,12 +101,12 @@
                 <div class="media">
                     <div class="media-left">
                         <a href="#">
-                            <img class="media-object img-rounded" th:src="${question.user.avatarUrl}">
+                            <img class="media-object img-rounded" th:src="${session.user != null ? session.user.avatarUrl : '/images/default-avatar.png'}">
                         </a>
                     </div>
                     <div class="media-body">
                         <h5 class="media-heading">
-                            <span th:text="${question.user.name}"></span>
+                            <span th:text="${session.user != null ? session.user.name : '未登录'}"></span>
                         </h5>
                     </div>
                 </div>

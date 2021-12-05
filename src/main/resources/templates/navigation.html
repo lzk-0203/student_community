@@ -29,12 +29,12 @@
                                 <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="/profile/questions">我的提问</a></li>
-                                <li><a href="#">个人资料</a></li>
                                 <li><a href="/logout">退出登录</a></li>
                             </ul>
                         </li>
                         <li th:if="${session.user == null}">
                             <a href="https://github.com/login/oauth/authorize?client_id=ceb23fb5d2e932187320&redirect_uri=http://localhost:8081/callback&scope=user&state=1">登录</a>
+<!--                            <a href="#" data-toggle="modal" data-target="#myModal">登录</a>-->
                         </li>
                     </ul>
                 </div>
